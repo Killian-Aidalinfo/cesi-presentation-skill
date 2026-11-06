@@ -2,6 +2,26 @@
 
 Offline generator for editable 16:9 PowerPoint and independently rendered PDF slides from a UTF-8 JSON deck. Its black `#000000`, yellow `#FBE216` and white `#FFFFFF` palette and high-contrast headings are inspired by observations of [the CESI homepage](https://www.cesi.fr/) and its [website stylesheet](https://www.cesi.fr/wp-content/themes/cesi-2022/css/base.min.css?ver=1.4.25). This is **not an official CESI brand guide**; no official logo or endorsement is included. The generator uses Arial and Helvetica, not CESI's web fonts. Obtain authorized materials for official-branded deliverables.
 
+## Aperçus du design
+
+Ces exemples sont des rendus réels du PDF généré à partir de [`examples/internal-update.json`](examples/internal-update.json). Le contenu est fictif et le style est inspiré du site CESI, sans constituer une charte officielle. Le rendu PowerPoint peut légèrement différer.
+
+### Couverture
+
+![Exemple de couverture : fond noir, titre blanc et accent jaune](docs/design/slide-01.png)
+
+### Intercalaire de section
+
+![Exemple de diapositive de section sur fond noir](docs/design/slide-02.png)
+
+### Contenu et points clés
+
+![Exemple de diapositive de contenu sur fond blanc](docs/design/slide-03.png)
+
+### Décisions et actions
+
+![Exemple de diapositive de décisions et actions](docs/design/slide-04.png)
+
 ## Setup
 
 Python 3.10+:
