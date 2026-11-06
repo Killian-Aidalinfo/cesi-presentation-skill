@@ -1,0 +1,7 @@
+{
+  "footer": "Exemple fictif • Design non officiel",
+  "slides": [
+    {"type": "quote", "title": "Apprendre ensemble pour faire avancer les idées", "subtitle": "Équipe projet fictive"},
+    {"type": "cards", "title": "Trois priorités communes", "subtitle": "Un exemple à adapter à votre contexte", "bullets": ["Partager les idées", "Expérimenter ensemble", "Tirer les enseignements"]}
+  ]
+}

@@ -10,7 +10,7 @@ Use this skill to create editable 16:9 PPTX slides and/or independently drawn PD
 ## Workflow
 
 1. Collect the audience, objective, language, slide content and any approved brand assets. Do not invent facts or claim approval. Use brief slide copy.
-2. Copy `examples/internal-update.json` as a starting point and edit it in UTF-8. Available slide types: `title`, `section`, `content`. Each requires `title`; `subtitle` is optional. `bullets` are permitted only for content slides, up to five. `footer` is a deck-level string. Constraints and limitations are in README.md.
+2. Copy `examples/internal-update.json` or `examples/designs.json` as a starting point and edit it in UTF-8. Available slide types: `title`, `section`, `content`, `quote` and `cards`. Each requires `title`; `subtitle` is optional. `content` supports up to five `bullets`; `cards` requires one to three. For `quote`, use `title` for the message and `subtitle` for attribution. `footer` is a deck-level string. Constraints and limitations are in README.md.
 3. Install Python dependencies in a virtual environment as shown in README.md; then run:
 
 ```bash

@@ -21,8 +21,8 @@ def validate(data):
     for i, s in enumerate(data['slides'], 1):
         if not isinstance(s, dict):
             raise ValueError(f'slide {i}: must be an object')
-        if s.get('type', 'content') not in ('title', 'content', 'section'):
-            raise ValueError(f'slide {i}: type must be title, section or content')
+        if s.get('type', 'content') not in ('title', 'content', 'section', 'quote', 'cards'):
+            raise ValueError(f'slide {i}: type must be title, section, content, quote or cards')
         for key, limit in [('title', 80), ('subtitle', 110)]:
             value = s.get(key, '')
             if not isinstance(value, str) or len(value) > limit or '\n' in value:
@@ -32,8 +32,10 @@ def validate(data):
         bullets = s.get('bullets', [])
         if not isinstance(bullets, list) or len(bullets) > 5 or any(not isinstance(b, str) or not b.strip() or len(b) > 120 or '\n' in b for b in bullets):
             raise ValueError(f'slide {i}: bullets must be an array of at most 5 non-empty single-line strings, each at most 120 characters')
-        if s.get('type', 'content') != 'content' and bullets:
-            raise ValueError(f'slide {i}: bullets are supported only on content slides')
+        if s.get('type', 'content') not in ('content', 'cards') and bullets:
+            raise ValueError(f'slide {i}: bullets are supported only on content and cards slides')
+        if s.get('type') == 'cards' and not 1 <= len(bullets) <= 3:
+            raise ValueError(f'slide {i}: cards requires 1 to 3 bullets')
     return data
 
 
@@ -42,7 +44,23 @@ def layout(slide, number, footer):
     dark = slide.get('type', 'content') in ('title', 'section')
     p = [('rect', 0, 0, W, H, NAVY if dark else WHITE),
          ('rect', 0, 0, 12, H, BLUE)]
-    if dark:
+    if slide.get('type') == 'quote':
+        p += [('rect', 64, 80, 110, 12, BLUE),
+              ('text', 64, 145, 825, 140, slide['title'], 38, INK, True),
+              ('rect', 64, 325, 55, 5, BLUE),
+              ('text', 64, 352, 820, 55, slide.get('subtitle', ''), 20, INK, False),
+              ('rect', 912, 0, 48, H, BLUE)]
+    elif slide.get('type') == 'cards':
+        p += [('rect', 0, 0, W, 14, BLUE),
+              ('text', 64, 49, 830, 73, slide['title'], 30, INK, True),
+              ('text', 64, 125, 830, 45, slide.get('subtitle', ''), 17, INK, False)]
+        for index, bullet in enumerate(slide['bullets']):
+            x = 64 + index * 285
+            p += [('rect', x, 190, 265, 235, NAVY),
+                  ('rect', x, 190, 265, 8, BLUE),
+                  ('text', x + 20, 215, 225, 32, f'0{index + 1}', 18, BLUE, True),
+                  ('text', x + 20, 265, 225, 135, bullet, 20, WHITE, True)]
+    elif dark:
         p += [('rect', 64, 123, 75, 6, BLUE),
               ('text', 64, 162, 820, 84, slide['title'], 38, WHITE, True),
               ('text', 64, 275, 820, 55, slide.get('subtitle', ''), 21, '#D8E9ED', False)]

@@ -22,6 +22,28 @@ Ces exemples sont des rendus réels du PDF généré à partir de [`examples/int
 
 ![Exemple de diapositive de décisions et actions](docs/design/slide-04.png)
 
+Les deux mises en page suivantes proviennent du PDF réellement généré depuis [`examples/designs.json`](examples/designs.json). Le texte est fictif ; ces designs sont inspirés et non officiels.
+
+### Citation ou message clé (`quote`)
+
+![Message clé noir sur blanc avec accents jaunes](docs/design/quote.png)
+
+### Trois cartes (`cards`)
+
+![Trois cartes noires numérotées sur fond blanc](docs/design/cards.png)
+
+Pour générer ces deux diapositives en formats éditable et PDF :
+
+```sh
+python scripts/generate.py examples/designs.json --pptx output/designs.pptx --pdf output/designs.pdf
+```
+
+Pour reproduire les aperçus PNG à partir du PDF indépendant (nécessite `pypdfium2` et Pillow, non inclus dans les dépendances de base) :
+
+```sh
+python -c "import pypdfium2 as p; d=p.PdfDocument('output/designs.pdf'); [(d[i].render(scale=1.5).to_pil().save('docs/design/'+name)) for i,name in enumerate(['quote.png','cards.png'])]"
+```
+
 ## Setup
 
 Python 3.10+:
@@ -38,7 +60,7 @@ On Windows use `.venv\Scripts\activate`. Outputs can be requested separately wit
 
 ## Input
 
-`slides` is a non-empty array. Each slide has `type` (`title`, `section`, or `content`; default `content`), required single-line `title` (max 80 characters), optional single-line `subtitle` (max 110). Content slides may include up to five nonempty, single-line `bullets` (max 120 characters each); bullets are not allowed on other types. Optional deck-level `footer` has at most 70 characters. Use concise text; character limits alone do not guarantee a fit. The PDF generator rejects text it detects exceeding boxes; PowerPoint can wrap differently and must be visually inspected. Unknown properties are ignored. Images, speaker notes, charts and official templates are not supported.
+`slides` is a non-empty array. Each slide has `type` (`title`, `section`, `content`, `quote`, or `cards`; default `content`), required single-line `title` (max 80 characters), optional single-line `subtitle` (max 110). Content slides may include up to five nonempty, single-line `bullets` (max 120 characters each); `cards` requires one to three bullets, displayed as numbered cards. Bullets are not allowed on other types. For `quote`, `title` is the message and `subtitle` its optional attribution. Optional deck-level `footer` has at most 70 characters. Use concise text; character limits alone do not guarantee a fit. The PDF generator rejects text it detects exceeding boxes; PowerPoint can wrap differently and must be visually inspected. Unknown properties are ignored. Images, speaker notes, charts and official templates are not supported.
 
 PDF is **not a conversion of the PPTX**. ReportLab draws its own slide pages using Helvetica, while PPTX uses Arial; rendering and line breaks may differ. Standard PDF fonts are not guaranteed to cover arbitrary Unicode; check glyphs or use an approved font workflow. PPTX-to-PDF fidelity requires a real converter such as LibreOffice, installed separately; for example, convert to a different directory using `soffice --headless --convert-to pdf --outdir converted output/deck.pptx`. Inspect the result. This generator does not invoke LibreOffice.
 
