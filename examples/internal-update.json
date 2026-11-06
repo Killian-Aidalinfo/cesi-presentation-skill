@@ -1,0 +1,9 @@
+{
+  "footer": "Exemple fictif • Usage interne",
+  "slides": [
+    {"type": "title", "title": "Point d'équipe", "subtitle": "Exemple de présentation interne"},
+    {"type": "section", "title": "Avancement", "subtitle": "Priorités et prochaines étapes"},
+    {"type": "content", "title": "Cette semaine", "subtitle": "À adapter à votre contexte", "bullets": ["Partager les avancées avec l'équipe", "Identifier les points de blocage", "Convenir des prochaines actions"]},
+    {"type": "content", "title": "Décisions et actions", "bullets": ["Décision : à compléter", "Responsable : à compléter", "Échéance : à confirmer"]}
+  ]
+}
